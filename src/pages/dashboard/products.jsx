@@ -16,41 +16,30 @@ const PRODUCT_LIMIT = 10;
 export default function products() {
   const [offsetProducts, setOffsetProducts] = useState(0);
   const [open, setOpen] = useState(false);
-  // const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, 0));
+  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, offsetProducts));
   const allProducts = useFetch(endPoints.products.allProducts);
-  const [products, setProducts] = useState([]);
+
   const { alert, setAlert, toggleAlert } = useAlert();
 
-  useEffect(() => {
-    async function getProducts() {
-      const response = await axios.get(endPoints.products.allProducts);
-      setProducts(response.data);
-    }
-    try {
-      getProducts();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [alert, endPoints]);
-
   const handleDelete = (id) => {
-    deleteProduct(id).then(() => {
-      setAlert({
-        active: true,
-        message: 'Product deleted',
-        type: 'success',
-        autoClose: true,
+    deleteProduct(id)
+      .then(() => {
+        setAlert({
+          active: true,
+          message: 'Product deleted',
+          type: 'success',
+          autoClose: true,
+        });
+        setOpen(false);
+      })
+      .catch((error) => {
+        setAlert({
+          active: true,
+          message: error,
+          type: 'error',
+          autoClose: true,
+        });
       });
-      setOpen(false);
-    })
-    .catch((error) => {
-      setAlert({
-        active: true,
-        message: error,
-        type: 'error',
-        autoClose: true,
-      });
-    });
   };
 
   return (
