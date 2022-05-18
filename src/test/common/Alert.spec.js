@@ -1,5 +1,5 @@
 import { mount } from "enzyme";
-import Alert from "../../common/Alert";
+import Alert from "@common/Alert";
 import { render } from "@testing-library/react";
 jest.useFakeTimers();
 
