@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import useFetch from '@hooks/useFetch';
 import endPoints from '@services/api';
@@ -18,28 +19,39 @@ export default function products() {
   const [open, setOpen] = useState(false);
   const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, offsetProducts));
   const allProducts = useFetch(endPoints.products.allProducts);
-
+  
   const { alert, setAlert, toggleAlert } = useAlert();
 
+{ /* useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(endPoints.products.getProducts(PRODUCT_LIMIT, offsetProducts));
+      setProducts(response.data);
+    }
+    try {
+      getProducts();
+    } catch (error) {
+      console.error(error);
+    }
+  }, [alert, endPoints]);*/}
+
   const handleDelete = (id) => {
-    deleteProduct(id)
-      .then(() => {
-        setAlert({
-          active: true,
-          message: 'Product deleted',
-          type: 'success',
-          autoClose: true,
-        });
-        setOpen(false);
-      })
-      .catch((error) => {
-        setAlert({
-          active: true,
-          message: error,
-          type: 'error',
-          autoClose: true,
-        });
+    deleteProduct(id).then(() => {
+      setAlert({
+        active: true,
+        message: 'Product deleted',
+        type: 'success',
+        autoClose: true,
       });
+      setOpen(false);
+    })
+    .catch((error) => {
+      setAlert({
+        active: true,
+        message: error,
+        type: 'error',
+        autoClose: true,
+      });
+    });
   };
 
   return (

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useContext, createContext } from 'react';
 import Cookie from 'js-cookie';
 import axios from 'axios';

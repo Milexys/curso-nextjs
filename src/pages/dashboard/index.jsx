@@ -1,8 +1,8 @@
+import React from 'react';
 import { useState } from 'react';
 import Chart from '@common/Chart';
 import useFetch from '@hooks/useFetch';
 import endPoints from '@services/api';
-import Pagination from '@common/Pagination';
 
 const PRODUCT_LIMIT = 10;
 
